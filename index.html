@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Herramienta de Despliegue</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .login-container {
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .btn-gradient {
+      background: linear-gradient(to right, blue, red);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .btn-gradient:hover {
+      opacity: 0.9;
+      transform: scale(1.05);
+    }
+    .checklist {
+      text-align: left;
+      max-width: 700px;
+      margin: auto;
+    }
+    .checklist h5 {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="contenedor" class="container"></div>
+
+  <script>
+    const contenedor = document.getElementById("contenedor");
+
+    // Pantalla de login
+function mostrarLogin() {
+  contenedor.innerHTML = `
+    <div class="login-container">
+      <h3 class="text-center mb-4 fw-bold">Iniciar Sesión</h3>
+      <form onsubmit="event.preventDefault(); verificarLogin();">
+        <div class="mb-3">
+          <label for="usuario" class="form-label">Usuario</label>
+          <input type="text" class="form-control" id="usuario" required>
+        </div>
+        <div class="mb-3">
+          <label for="contrasena" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="contrasena" required>
+        </div>
+        <button type="submit" class="btn-gradient w-100">Ingresar</button>
+      </form>
+    </div>
+  `;
+}
+
+// Lista de usuarios válidos
+const usuarios = [
+  { usuario: "admin", contrasena: "password" },
+  { usuario: "admin2", contrasena: "password2" }
+];
+
+// Validación
+function validarLogin(usuario, contrasena) {
+  return usuarios.some(u => u.usuario === usuario && u.contrasena === contrasena);
+}
+
+function verificarLogin() {
+  const user = document.getElementById("usuario").value;   // ✅ ID correcto
+  const pass = document.getElementById("contrasena").value; // ✅ ID correcto
+
+  if (validarLogin(user, pass)) {
+    mostrarResponsables(); // ✅ Solo entra si coincide
+  } else {
+    alert("Usuario o contraseña incorrectos");
+  }
+}
+
+    // Pantalla de selección de responsables
+    function mostrarResponsables() {
+      contenedor.innerHTML = `
+        <div class="text-center mt-5">
+          <h2 class="fw-bold">Seleccione el responsable</h2>
+          <p class="mb-4">Elija una opción para continuar:</p>
+          <div class="d-grid gap-3 col-6 mx-auto">
+            <button class="btn btn-primary" onclick="mostrarImplementador()">Implementador</button>
+            <button class="btn btn-primary" onclick="mostrarCapacitador()">Capacitador</button>
+            <button class="btn btn-primary" onclick="mostrarAuditor()">Auditor</button>
+          </div>
+          <div class="text-center mt-3 small text-muted">Diseñado por Daniel Berrio</div>
+        </div>
+      `;
+    }
+
+    // Pantalla del Implementador
+// Pantalla del Implementador con sub-opciones
+function mostrarImplementador() {
+  contenedor.innerHTML = `
+    <div class="text-center mt-5">
+      <h2 class="fw-bold">Módulo del Implementador</h2>
+      <p>Seleccione una opción:</p>
+      <div class="d-grid gap-3 col-6 mx-auto">
+        <button class="btn btn-primary" onclick="mostrarChecklistImplementacion()">Checklist de Implementación</button>
+        <button class="btn btn-primary" onclick="mostrarRegistroIncidencias()">Registro de Incidencias</button>
+        <button class="btn btn-primary" onclick="mostrarIntegracion()">Integración con otros módulos</button>
+      </div>
+      <div class="text-center mt-3 small text-muted">Diseñado por Daniel Berrio</div>
+    </div>
+  `;
+}
+
+// 1️⃣ Checklist de Implementación
+function mostrarChecklistImplementacion() {
+  contenedor.innerHTML = `
+    <div class="mt-5">
+      <h3 class="fw-bold text-center">Checklist de Implementación</h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Proceso</th>
+            <th>Tarea</th>
+            <th>Estado</th>
+            <th>Responsable</th>
+            <th>Fecha límite</th>
+            <th>Observaciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Gestión de calidad</td>
+            <td>Definir procedimientos</td>
+            <td>
+              <select class="form-select">
+                <option>No iniciado</option>
+                <option>En progreso</option>
+                <option>Completado</option>
+              </select>
+            </td>
+            <td><input type="text" class="form-control" placeholder="Nombre"></td>
+            <td><input type="date" class="form-control"></td>
+            <td><input type="text" class="form-control" placeholder="Observaciones"></td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-secondary mt-3" onclick="mostrarImplementador()">Volver</button>
+    </div>
+  `;
+}
+
+// 2️⃣ Registro de incidencias y acciones correctivas
+function mostrarRegistroIncidencias() {
+  contenedor.innerHTML = `
+    <div class="mt-5">
+      <h3 class="fw-bold text-center">Registro de Incidencias</h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Incidencia</th>
+            <th>Acción Correctiva</th>
+            <th>Responsable</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="date" class="form-control"></td>
+            <td><input type="text" class="form-control" placeholder="Describa la incidencia"></td>
+            <td><input type="text" class="form-control" placeholder="Acción correctiva"></td>
+            <td><input type="text" class="form-control" placeholder="Responsable"></td>
+            <td>
+              <select class="form-select">
+                <option>Pendiente</option>
+                <option>En proceso</option>
+                <option>Resuelto</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-secondary mt-3" onclick="mostrarImplementador()">Volver</button>
+    </div>
+  `;
+}
+
+// 3️⃣ Integración con otros módulos
+function mostrarIntegracion() {
+  contenedor.innerHTML = `
+    <div class="mt-5 text-center">
+      <h3 class="fw-bold">Integración con otros módulos</h3>
+      <p>Indique el estado de integración con Capacitador y Auditor:</p>
+      <table class="table table-bordered mx-auto" style="max-width:600px;">
+        <thead>
+          <tr>
+            <th>Módulo</th>
+            <th>Estado</th>
+            <th>Observaciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Capacitador</td>
+            <td>
+              <select class="form-select">
+                <option>No iniciado</option>
+                <option>En proceso</option>
+                <option>Integrado</option>
+              </select>
+            </td>
+            <td><input type="text" class="form-control" placeholder="Observaciones"></td>
+          </tr>
+          <tr>
+            <td>Auditor</td>
+            <td>
+              <select class="form-select">
+                <option>No iniciado</option>
+                <option>En proceso</option>
+                <option>Integrado</option>
+              </select>
+            </td>
+            <td><input type="text" class="form-control" placeholder="Observaciones"></td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-secondary mt-3" onclick="mostrarImplementador()">Volver</button>
+    </div>
+  `;
+}
+
+    // Pantalla del Capacitador
+function mostrarCapacitador() {
+  contenedor.innerHTML = `
+    <div class="text-center mb-3 mt-5">
+      <h2 class="fw-bold">Módulo del Capacitador</h2>
+      <p class="mb-4">Seleccione un apartado:</p>
+    </div>
+    <div class="d-grid gap-2 col-6 mx-auto">
+      <button class="btn btn-primary" onclick="mostrarObjetivos()">Objetivos</button>
+      <button class="btn btn-primary" onclick="mostrarPHVA()">Ciclo PHVA</button>
+      <button class="btn btn-primary" onclick="mostrarOrganizacion()">Organización</button>
+      <button class="btn btn-primary" onclick="mostrarLiderazgo()">Liderazgo</button>
+      <button class="btn btn-primary" onclick="mostrarPlanificacion()">Planificación</button>
+      <button class="btn btn-primary" onclick="mostrarApoyo()">Apoyo</button>
+      <button class="btn btn-primary" onclick="mostrarOperacion()">Operación</button>
+      <button class="btn btn-primary" onclick="mostrarDesempeno()">Desempeño</button>
+      <button class="btn btn-primary" onclick="mostrarMejora()">Mejora</button>
+    </div>
+    <div class="text-center mt-3 small text-muted">Diseñado por Daniel Berrio</div>
+  `;
+}
+
+// 🔹 Submenú de Objetivos con los links
+function mostrarObjetivos() {
+  contenedor.innerHTML = `
+    <div class="mt-5">
+      <h2 class="fw-bold text-center">Objetivos</h2>
+      <p class="text-center mb-4">Seleccione un documento:</p>
+      <ul class="list-group col-6 mx-auto">
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1entrTfrmBxHAU8Ywvt1S9wK7dVYZh9_N/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Objetivos e indicadores SMART
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1XniTslEk8lZa9YUe85y1eAFgSZPy2yX1/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Objetivos de calidad
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1Sr4zFh03GQb8A2a5bDnLpV-ACNldc4ai/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Plantilla indicadores de desempeño
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1P8P16b7bfJpJ8XM7_e7TlZ13OpWXr1AY/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Indicadores por área funcional
+          </a>
+        </li>
+      </ul>
+      <div class="text-center mt-3">
+        <button class="btn btn-secondary" onclick="mostrarCapacitador()">⬅ Volver</button>
+      </div>
+    </div>
+  `;
+}
+
+// 🔹 Submenú de Ciclo PHVA con los links
+function mostrarPHVA() {
+  contenedor.innerHTML = `
+    <div class="mt-5">
+      <h2 class="fw-bold text-center">Ciclo PHVA</h2>
+      <p class="text-center mb-4">Seleccione un documento:</p>
+      <ul class="list-group col-6 mx-auto">
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1cL-6QGqe8S6wwxnR_65dPYaV4Zq9Tb03/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Seguimiento, medición, análisis y evaluación
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1MAg9-xN9qXd1BvsEqwnGfK3jzivJinPb/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Matriz de riesgo
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1vL6cfh3qpTiIKu3hM1uC4WukDoRjRMs2/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Acta cambio proyecto
+          </a>
+        </li>
+      </ul>
+      <div class="text-center mt-3">
+        <button class="btn btn-secondary" onclick="mostrarCapacitador()">⬅ Volver</button>
+      </div>
+    </div>
+  `;
+}
+
+// 🔹 Submenú de Organización con los links
+function mostrarOrganizacion() {
+  contenedor.innerHTML = `
+    <div class="mt-5">
+      <h2 class="fw-bold text-center">Organización</h2>
+      <p class="text-center mb-4">Seleccione un documento:</p>
+      <ul class="list-group col-6 mx-auto">
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1jz-yk2hImMcfMzcBMqBj74KtM7kltn6G/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Plantilla alcance
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1Ayb2tqj2zNF874XjjvZuya_ilMRVSD8D/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Plantilla de procesos
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1DT1aQQhtfX6La8N8JfC0PJ01p2K6PaLX/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Organigrama
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1QZgRalKW2N1DzX-9e-ChzmbPZN0AIoXs/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Plantilla partes interesadas
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1eW0hRVbcv57UO8ZFyYDEzIXGNyVXX9Gt/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Matriz FODA
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1ccPMywtiuAqWPjAZ9vAzDI6jc3DakxBw/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Plantilla PESTAL
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1eGf4oSNb_AlqFdZvtKhBLIk5t7wRxXuV/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Plantilla 5 fuerzas de Porter
+          </a>
+        </li>
+      </ul>
+      <div class="text-center mt-3">
+        <button class="btn btn-secondary" onclick="mostrarCapacitador()">⬅ Volver</button>
+      </div>
+    </div>
+  `;
+}
+
+// 🔹 Submenú de Liderazgo con los links
+function mostrarLiderazgo() {
+  contenedor.innerHTML = `
+    <div class="mt-5">
+      <h2 class="fw-bold text-center">Liderazgo</h2>
+      <p class="text-center mb-4">Seleccione un documento:</p>
+      <ul class="list-group col-6 mx-auto">
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1sG1avjS4WoB0ADtnmw-tgULmqmet520d/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Checklist liderazgo actual
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/19pURueHpINBIfK03MUGkPmJ_iHmQwjMO/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Plantilla política de calidad
+          </a>
+        </li>
+      </ul>
+      <div class="text-center mt-3">
+        <button class="btn btn-secondary" onclick="mostrarCapacitador()">⬅ Volver</button>
+      </div>
+    </div>
+  `;
+}
+
+// 🔹 Submenú de Planificación con los links
+function mostrarPlanificacion() {
+  contenedor.innerHTML = `
+    <div class="mt-5">
+      <h2 class="fw-bold text-center">Planificación</h2>
+      <p class="text-center mb-4">Seleccione un documento:</p>
+      <ul class="list-group col-6 mx-auto">
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1aztCrro79KUyeYgthdjdx85Q8MhV_Pq9/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Planificación de los cambios
+          </a>
+        </li>
+      </ul>
+      <div class="text-center mt-3">
+        <button class="btn btn-secondary" onclick="mostrarCapacitador()">⬅ Volver</button>
+      </div>
+    </div>
+  `;
+}
+
+// 🔹 Submenú de Apoyo con los links
+function mostrarApoyo() {
+  contenedor.innerHTML = `
+    <div class="mt-5">
+      <h2 class="fw-bold text-center">Apoyo</h2>
+      <p class="text-center mb-4">Seleccione un documento:</p>
+      <ul class="list-group col-8 mx-auto">
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1UpolpMvh8kXauJhwM5KvBzHRk3hbSb2n/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Medición de condiciones psicosociales
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1kXmoTtscwtDid1tZvanAxj8pcIfCsleA/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Medición de condiciones físicas
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/12Z5LPfT3kQR0d2YonSiIKdtPZ-tw6-9W/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Formato competencia
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1mIZB0OdlUfkYxO0PQUF3VvEHKmj98TSi/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Formato toma de conciencia
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1KnlH9-ecw3XN0QD8B9U5o3R30njfG3sw/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Formato información documentada
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/11K10uK2uI9PfccFSygo8NIr5s4-H2LkQ/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Control de infraestructura
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/14M9qrpy1m3rb-h_AVcuDTtKwd57PYAuc/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Formato recursos de seguimiento y medición
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://drive.google.com/file/d/1C3pgSQ4NyEoy1bYE4SaueouND9aJdf2e/view?usp=sharing" target="_blank">
+            📄 PDF gestión del conocimiento
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1ot6-ajF3ntLkKWwVXhP89IuJDDr___w3/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Plantilla requerimiento de personal
+          </a>
+        </li>
+      </ul>
+      <div class="text-center mt-3">
+        <button class="btn btn-secondary" onclick="mostrarCapacitador()">⬅ Volver</button>
+      </div>
+    </div>
+  `;
+}
+
+//  Submenú de Operación con los links
+function mostrarOperacion() {
+  contenedor.innerHTML = `
+    <div class="mt-5">
+      <h2 class="fw-bold text-center">Operación</h2>
+      <p class="text-center mb-4">Seleccione un documento:</p>
+      <ul class="list-group col-8 mx-auto">
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1f1H01pJ-3vRvb2xBN6K4QNjCv31QOw0L/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Planificación y control operacional
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1v5zAP9tK-BH7kk-OO_L79zAgs5eB2A4p/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Requisitos para los productos y servicios
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1xgvfhOccUXNx2qam_6ZLmZblrV656lPR/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Control de los procesos externos
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/18fN5cS-CcvB1GgP-npSorGATSfMD3u12/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Identificación y trazabilidad
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1zZoxmPL0yS0Gm-w6KgE5NxOrhTLrbGP_/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Liberación de los productos y servicios
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1ldhyVlG924Gf3B9UuVAltgu1wu4G85aa/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Control de salidas no conformes
+          </a>
+        </li>
+      </ul>
+      <div class="text-center mt-3">
+        <button class="btn btn-secondary" onclick="mostrarCapacitador()">⬅ Volver</button>
+      </div>
+    </div>
+  `;
+}
+
+// 🔹 Submenú de Desempeño con los links
+function mostrarDesempeno() {
+  contenedor.innerHTML = `
+    <div class="mt-5">
+      <h2 class="fw-bold text-center">Desempeño</h2>
+      <p class="text-center mb-4">Seleccione un documento:</p>
+      <ul class="list-group col-8 mx-auto">
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1cL-6QGqe8S6wwxnR_65dPYaV4Zq9Tb03/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Seguimiento, medición, análisis y evaluación
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1Sr4zFh03GQb8A2a5bDnLpV-ACNldc4ai/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Plantilla indicadores de desempeño
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1P8P16b7bfJpJ8XM7_e7TlZ13OpWXr1AY/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 Multiplantilla indicadores por área funcional
+          </a>
+        </li>
+      </ul>
+      <div class="text-center mt-3">
+        <button class="btn btn-secondary" onclick="mostrarCapacitador()">⬅ Volver</button>
+      </div>
+    </div>
+  `;
+}
+
+// 🔹 Submenú de Mejora con el enlace de 10.2 No conformidad y acción correctiva
+function mostrarMejora() {
+  contenedor.innerHTML = `
+    <div class="mt-5">
+      <h2 class="fw-bold text-center">Mejora</h2>
+      <p class="text-center mb-4">Seleccione un documento:</p>
+      <ul class="list-group col-8 mx-auto">
+        <li class="list-group-item">
+          <a href="https://docs.google.com/spreadsheets/d/1IOwHprWTNb-bPzsTG4X7yxLXdERm-B1l/edit?usp=sharing&ouid=115465540193721348792&rtpof=true&sd=true" target="_blank">
+            📄 10.2 No conformidad y acción correctiva
+          </a>
+        </li>
+      </ul>
+      <div class="text-center mt-3">
+        <button class="btn btn-secondary" onclick="mostrarCapacitador()">⬅ Volver</button>
+      </div>
+    </div>
+  `;
+}
+
+
+    // Pantalla del Auditor con checklist
+function mostrarAuditor() {
+  contenedor.innerHTML = `
+    <div class="mt-5">
+      <h2 class="fw-bold text-center">Módulo del Auditor</h2>
+      <p class="text-center mb-4">Checklist ISO 9001:2015 (Capitulo 4.1 – 10.3)</p>
+
+      <!-- Filtro por estado -->
+      <div class="text-center mb-3">
+        <label for="filtroEstado" class="form-label fw-bold">Filtrar por estado:</label>
+        <select id="filtroEstado" class="form-select d-inline-block w-auto ms-2">
+          <option value="todos">Todos</option>
+          <option value="Cumple">Cumple</option>
+          <option value="En proceso">En proceso</option>
+          <option value="No cumple">No cumple</option>
+        </select>
+        <button id="btnReiniciar" class="btn btn-danger btn-sm ms-3">Reiniciar checklist</button>
+      </div>
+      
+      <div class="table-responsive">
+        <table id="tablaAuditor" class="table table-bordered table-striped align-middle">
+          <thead class="table-primary text-center">
+            <tr>
+              <th>Cap.</th>
+              <th>Ítem</th>
+              <th>Requisito</th>
+              <th>Estado</th>
+              <th>Observaciones</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <!-- CAPÍTULO 4 -->
+            <tr><td>4</td><td>4.1</td><td>¿Se han identificado factores internos y externos?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>4</td><td>4.2</td><td>¿Se han identificado las partes interesadas relevantes?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>4</td><td>4.3</td><td>¿Se ha definido el alcance del SGC?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>4</td><td>4.4</td><td>¿Se han establecido los procesos necesarios del SGC?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+
+            <!-- CAPÍTULO 5 -->
+            <tr><td>5</td><td>5.1</td><td>¿La alta dirección demuestra liderazgo y compromiso?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>5</td><td>5.2</td><td>¿Se ha definido y comunicado la política de calidad?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>5</td><td>5.3</td><td>¿Se han definido roles, responsabilidades y autoridades?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+
+            <!-- CAPÍTULO 6 -->
+            <tr><td>6</td><td>6.1</td><td>¿Se han identificado riesgos y oportunidades?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>6</td><td>6.2</td><td>¿Se han establecido objetivos de calidad medibles?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>6</td><td>6.3</td><td>¿Se planifican los cambios del SGC de manera controlada?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+
+            <!-- CAPÍTULO 7 -->
+            <tr><td>7</td><td>7.1</td><td>¿Se dispone de los recursos necesarios para el SGC?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>7</td><td>7.2</td><td>¿Se evalúan competencias y capacitaciones?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>7</td><td>7.3</td><td>¿El personal es consciente de la política y objetivos?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>7</td><td>7.4</td><td>¿La comunicación interna y externa es adecuada?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>7</td><td>7.5</td><td>¿La información documentada está controlada?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+
+            <!-- CAPÍTULO 8 -->
+            <tr><td>8</td><td>8.1</td><td>¿Se planifican y controlan los procesos operativos?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>8</td><td>8.2</td><td>¿Se determinan los requisitos del cliente?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>8</td><td>8.3</td><td>¿Se realiza diseño y desarrollo cuando aplica?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>8</td><td>8.4</td><td>¿Se controlan los proveedores y compras?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>8</td><td>8.5</td><td>¿Se controla la producción y prestación del servicio?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>8</td><td>8.6</td><td>¿Se liberan productos y servicios conforme requisitos?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>8</td><td>8.7</td><td>¿Se gestionan las no conformidades en la entrega?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+
+            <!-- CAPÍTULO 9 -->
+            <tr><td>9</td><td>9.1</td><td>¿Se realiza seguimiento, medición y análisis del SGC?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>9</td><td>9.1.2</td><td>¿Se mide la satisfacción del cliente?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>9</td><td>9.2</td><td>¿Se realizan auditorías internas documentadas?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>9</td><td>9.3</td><td>¿La dirección realiza revisiones del SGC?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+
+            <!-- CAPÍTULO 10 -->
+            <tr><td>10</td><td>10.2</td><td>¿Se gestionan las no conformidades y acciones correctivas?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+            <tr><td>10</td><td>10.3</td><td>¿Se busca la mejora continua del SGC?</td><td>${estado()}</td><td>${observaciones()}</td></tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Botón de exportar -->
+      <div class="text-center">
+        <button class="btn btn-success mt-3" onclick="exportarChecklist()">Descargar Informe</button>
+      </div>
+
+      <div class="text-center mt-4 small text-muted">Diseñado por Daniel Berrio</div>
+    </div>
+  `;
+
+    //  Colores en los estados
+  document.querySelectorAll(".estado-select").forEach(select => {
+    select.addEventListener("change", function () {
+      const indicador = this.parentElement.querySelector(".estado-indicador");
+      if (this.value === "Cumple") {
+        indicador.style.backgroundColor = "green";
+      } else if (this.value === "En proceso") {
+        indicador.style.backgroundColor = "orange";
+      } else if (this.value === "No cumple") {
+        indicador.style.backgroundColor = "red";
+      } else {
+        indicador.style.backgroundColor = "transparent";
+      }
+    });
+  });
+
+  //  Filtro dinámico
+  document.getElementById("filtroEstado").addEventListener("change", function () {
+    const filtro = this.value;
+    document.querySelectorAll("#tablaAuditor tbody tr").forEach(row => {
+      const select = row.querySelector(".estado-select");
+      if (!select) return;
+      const valor = select.value;
+      row.style.display = (filtro === "todos" || filtro === valor) ? "" : "none";
+    });
+  });
+
+  //  Botón de reinicio
+  document.getElementById("btnReiniciar").addEventListener("click", function () {
+    document.querySelectorAll(".estado-select").forEach(select => {
+      select.value = ""; // Vuelve a "Seleccione..."
+      const indicador = select.parentElement.querySelector(".estado-indicador");
+      if (indicador) indicador.style.backgroundColor = "transparent";
+    });
+    document.querySelectorAll("#tablaAuditor tbody tr").forEach(row => {
+      row.style.display = ""; // Muestra todas las filas
+    });
+    document.getElementById("filtroEstado").value = "todos"; // Reinicia el filtro
+  });
+}
+
+// Función auxiliar para select con indicador
+function estado() {
+  return `
+    <div class="d-flex align-items-center gap-2">
+      <select class="form-select estado-select">
+        <option value="">Seleccione...</option>
+        <option value="Cumple">Cumple</option>
+        <option value="En proceso">En proceso</option>
+        <option value="No cumple">No cumple</option>
+      </select>
+      <span class="estado-indicador" style="width:20px; height:20px; border-radius:50%; display:inline-block; border:1px solid #ccc;"></span>
+    </div>
+  `;
+}
+
+// Función auxiliar para observaciones
+function observaciones() {
+  return `<input type="text" class="form-control" placeholder="Escriba observaciones...">`;
+}
+
+
+
+// Función para exportar checklist a CSV
+function exportarChecklist() {
+  const filas = [];
+  const tabla = document.querySelector("table tbody").rows;
+
+  filas.push(["Cap.", "Ítem", "Requisito", "Estado", "Observaciones"]);
+
+  for (let row of tabla) {
+    const cap = row.cells[0].innerText;
+    const item = row.cells[1].innerText;
+    const req = row.cells[2].innerText;
+    const estadoSelect = row.querySelector("select");
+    const estado = estadoSelect ? estadoSelect.value : "";
+    const obsInput = row.querySelector("input");
+    const observaciones = obsInput ? obsInput.value : "";
+    filas.push([cap, item, req, estado, observaciones]);
+  }
+
+  let csvContent = "data:text/csv;charset=utf-8," 
+    + filas.map(e => e.map(campo => `"${campo}"`).join(",")).join("\n");
+
+  const link = document.createElement("a");
+  link.setAttribute("href", encodeURI(csvContent));
+  link.setAttribute("download", "informe_auditoria.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+
+
+    // Mostrar login al cargar
+    mostrarLogin();
+  </script>
+
+</body>
+</html>

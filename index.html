@@ -125,9 +125,27 @@ function mostrarImplementador() {
 
 // 1️⃣ Checklist de Implementación
 function mostrarChecklistImplementacion() {
-  contenedor.innerHTML = `
+  // Obtener fecha y hora actual
+  const ahora = new Date();
+  const fecha = ahora.toLocaleDateString("es-CO");
+  const hora = ahora.toLocaleTimeString("es-CO", { hour: '2-digit', minute: '2-digit' });
+
+   contenedor.innerHTML = `
     <div class="mt-5">
       <h3 class="fw-bold text-center">Checklist de Implementación</h3>
+
+      <!-- Registro de fecha y hora -->
+      <div class="d-flex justify-content-center mb-4 gap-3">
+        <div>
+          <label class="form-label fw-bold">Fecha de implementación:</label>
+          <input type="text" class="form-control" value="${fecha}" readonly>
+        </div>
+        <div>
+          <label class="form-label fw-bold">Hora de inicio:</label>
+          <input type="text" class="form-control" value="${hora}" readonly>
+        </div>
+      </div>
+
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -156,16 +174,36 @@ function mostrarChecklistImplementacion() {
           </tr>
         </tbody>
       </table>
+      
       <button class="btn btn-secondary mt-3" onclick="mostrarImplementador()">Volver</button>
     </div>
   `;
 }
 
+
 // 2️⃣ Registro de incidencias y acciones correctivas
 function mostrarRegistroIncidencias() {
+  // Obtener fecha y hora actual
+const ahora = new Date();
+  const fecha = ahora.toLocaleDateString("es-CO");
+  const hora = ahora.toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit", hour12: true });
+
   contenedor.innerHTML = `
     <div class="mt-5">
       <h3 class="fw-bold text-center">Registro de Incidencias</h3>
+
+      <!-- Registro de fecha y hora -->
+      <div class="d-flex justify-content-center mb-4 gap-3">
+        <div>
+          <label class="form-label fw-bold">Fecha de registro:</label>
+          <input type="text" class="form-control" value="${fecha}" readonly>
+        </div>
+        <div>
+          <label class="form-label fw-bold">Hora de registro:</label>
+          <input type="text" class="form-control" value="${hora}" readonly>
+        </div>
+      </div>
+
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -192,6 +230,7 @@ function mostrarRegistroIncidencias() {
           </tr>
         </tbody>
       </table>
+      
       <button class="btn btn-secondary mt-3" onclick="mostrarImplementador()">Volver</button>
     </div>
   `;
@@ -199,10 +238,28 @@ function mostrarRegistroIncidencias() {
 
 // 3️⃣ Integración con otros módulos
 function mostrarIntegracion() {
+  // Obtener fecha y hora actual
+const ahora = new Date();
+  const fecha = ahora.toLocaleDateString("es-CO");
+  const hora = ahora.toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit", hour12: true });
+
   contenedor.innerHTML = `
     <div class="mt-5 text-center">
       <h3 class="fw-bold">Integración con otros módulos</h3>
       <p>Indique el estado de integración con Capacitador y Auditor:</p>
+
+      <!-- Registro de fecha y hora -->
+      <div class="d-flex justify-content-center mb-4 gap-3">
+        <div>
+          <label class="form-label fw-bold">Fecha de registro:</label>
+          <input type="text" class="form-control" value="${fecha}" readonly>
+        </div>
+        <div>
+          <label class="form-label fw-bold">Hora de registro:</label>
+          <input type="text" class="form-control" value="${hora}" readonly>
+        </div>
+      </div>
+
       <table class="table table-bordered mx-auto" style="max-width:600px;">
         <thead>
           <tr>
@@ -236,10 +293,12 @@ function mostrarIntegracion() {
           </tr>
         </tbody>
       </table>
+
       <button class="btn btn-secondary mt-3" onclick="mostrarImplementador()">Volver</button>
     </div>
   `;
 }
+
 
     // Pantalla del Capacitador
 function mostrarCapacitador() {
@@ -483,7 +542,7 @@ function mostrarApoyo() {
   `;
 }
 
-//  Submenú de Operación con los links
+// 🔹 Submenú de Operación con los links
 function mostrarOperacion() {
   contenedor.innerHTML = `
     <div class="mt-5">
@@ -578,14 +637,67 @@ function mostrarMejora() {
   `;
 }
 
-
-    // Pantalla del Auditor con checklist
 function mostrarAuditor() {
   contenedor.innerHTML = `
     <div class="mt-5">
-      <h2 class="fw-bold text-center">Módulo del Auditor</h2>
-      <p class="text-center mb-4">Checklist ISO 9001:2015 (Capitulo 4.1 – 10.3)</p>
+      <h2 class="fw-bold text-center">Registro del Auditor</h2>
+      <p class="text-center mb-4">Complete los datos antes de continuar al checklist:</p>
+      
+      <form id="formAuditor" class="col-8 mx-auto">
+        <div class="row g-3">
+          <div class="col-md-6"><label class="form-label">Razón social</label><input type="text" class="form-control" required></div>
+          <div class="col-md-6"><label class="form-label">NIT</label><input type="text" class="form-control" required></div>
+          <div class="col-md-6"><label class="form-label">Representante legal</label><input type="text" class="form-control" required></div>
+          <div class="col-md-6"><label class="form-label">Sector económico</label><input type="text" class="form-control" required></div>
+          <div class="col-md-6"><label class="form-label">Tipo de empresa</label><input type="text" class="form-control" required></div>
+          <div class="col-md-6"><label class="form-label">Dirección</label><input type="text" class="form-control" required></div>
+          <div class="col-md-6"><label class="form-label">Teléfono</label><input type="tel" class="form-control" required></div>
+          <div class="col-md-6"><label class="form-label">Número de empleados</label><input type="number" class="form-control" required></div>
+          <div class="col-md-6"><label class="form-label">Email</label><input type="email" class="form-control" required></div>
+          <div class="col-md-6"><label class="form-label">Sitio web</label><input type="url" class="form-control"></div>
+          <div class="col-md-4"><label class="form-label">Facebook</label><input type="url" class="form-control"></div>
+          <div class="col-md-4"><label class="form-label">Instagram</label><input type="url" class="form-control"></div>
+          <div class="col-md-4"><label class="form-label">TikTok</label><input type="url" class="form-control"></div>
+        </div>
+        
+        <div class="text-center mt-4">
+          <button type="submit" class="btn btn-primary">Registrar</button>
+        </div>
+      </form>
 
+      <div class="text-center mt-4 small text-muted">Diseñado por Daniel Berrio</div>
+    </div>
+  `;
+    // Cuando se envía el formulario, pasamos al checklist
+  document.getElementById("formAuditor").addEventListener("submit", function (e) {
+    e.preventDefault();
+    mostrarChecklistAuditor();
+  });
+}
+
+    // Pantalla del Auditor con checklist
+function mostrarChecklistAuditor() {
+    // Obtener fecha y hora actual
+const ahora = new Date();
+  const fecha = ahora.toLocaleDateString("es-CO");
+  const hora = ahora.toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit", hour12: true });
+
+  contenedor.innerHTML = `
+    <div class="mt-5">
+      <h2 class="fw-bold text-center">Módulo del Auditor</h2>
+      <p class="text-center mb-4">Checklist ISO 9001:2015 (Capítulo 4.1 – 10.3)</p>
+
+      <!-- Registro de fecha y hora -->
+      <div class="d-flex justify-content-center mb-4 gap-3">
+        <div>
+          <label class="form-label fw-bold">Fecha de la auditoría:</label>
+          <input type="text" class="form-control" value="${fecha}" readonly>
+        </div>
+        <div>
+          <label class="form-label fw-bold">Hora de inicio:</label>
+          <input type="text" class="form-control" value="${hora}" readonly>
+        </div>
+      </div>
       <!-- Filtro por estado -->
       <div class="text-center mb-3">
         <label for="filtroEstado" class="form-label fw-bold">Filtrar por estado:</label>
@@ -666,7 +778,7 @@ function mostrarAuditor() {
     </div>
   `;
 
-    //  Colores en los estados
+    // 🎨 Colores en los estados
   document.querySelectorAll(".estado-select").forEach(select => {
     select.addEventListener("change", function () {
       const indicador = this.parentElement.querySelector(".estado-indicador");
@@ -682,7 +794,7 @@ function mostrarAuditor() {
     });
   });
 
-  //  Filtro dinámico
+  // 🔎 Filtro dinámico
   document.getElementById("filtroEstado").addEventListener("change", function () {
     const filtro = this.value;
     document.querySelectorAll("#tablaAuditor tbody tr").forEach(row => {
@@ -693,7 +805,7 @@ function mostrarAuditor() {
     });
   });
 
-  //  Botón de reinicio
+  // 🔄 Botón de reinicio
   document.getElementById("btnReiniciar").addEventListener("click", function () {
     document.querySelectorAll(".estado-select").forEach(select => {
       select.value = ""; // Vuelve a "Seleccione..."

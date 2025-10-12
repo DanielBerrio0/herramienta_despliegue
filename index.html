@@ -1106,11 +1106,59 @@ function mostrarCapacitador() {
       <button class="btn btn-primary" onclick="mostrarOperacion()">Operación</button>
       <button class="btn btn-primary" onclick="mostrarDesempeno()">Desempeño</button>
       <button class="btn btn-primary" onclick="mostrarMejora()">Mejora</button>
-      <button class="btn btn-primary" onclick="mostrarCapacitacionEvidencias()">Subir/gestionar documentos</button>
+      <button class="btn btn-primary" onclick="mostrarIntroVideoCapacitador()">Subir/gestionar documentos</button>
     </div>
     <div class="text-center mt-3 small text-muted">Diseñado por Daniel Berrio</div>
   `;
 }
+
+// 🔗 Video de YouTube para el Capacitador
+const VIDEO_CAP_URL = "https://youtu.be/tsajVWg7JC0";
+
+// Pantalla intermedia: muestra el video y un botón "Continuar"
+function mostrarIntroVideoCapacitador() {
+  contenedor.innerHTML = `
+    <div class="mt-5">
+      <h2 class="fw-bold text-center">Capacitador – Subir/gestionar documentos</h2>
+      <p class="text-center mb-3">Antes de continuar, revisa este video:</p>
+
+      <div class="col-11 col-lg-8 mx-auto">
+        <div class="card mb-3">
+          <div class="card-body">
+            <p class="mb-2">
+              <a href="${VIDEO_CAP_URL}" target="_blank" rel="noopener">
+                🔗 Ver en YouTube
+              </a>
+            </p>
+            <div class="ratio ratio-16x9">
+              <iframe
+                src="https://www.youtube.com/embed/tsajVWg7JC0"
+                title="Video de capacitación"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center d-flex justify-content-center gap-2">
+          <button class="btn btn-primary" id="btnContinuarCap">Continuar</button>
+          <button class="btn btn-outline-secondary" onclick="mostrarCapacitador()">Volver</button>
+        </div>
+
+        <div class="text-center mt-4 small text-muted">Diseñado por Daniel Berrio</div>
+      </div>
+    </div>
+  `;
+
+  // Al pulsar continuar, muestra el gestor de documentos
+  document.getElementById("btnContinuarCap").addEventListener("click", () => {
+    // Si quieres que no vuelva a mostrar el video, descomenta la siguiente línea:
+    // sessionStorage.setItem("cap_video_visto", "1");
+    mostrarCapacitacionEvidencias();
+  });
+}
+
 
 // =======================================
 // CAPACITADOR: SUBIR / GESTIONAR DOCUMENTOS

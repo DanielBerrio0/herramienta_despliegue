@@ -7,16 +7,31 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      background-color: #f8f9fa;
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+        url("https://raw.githubusercontent.com/DanielBerrio0/herramienta_despliegue/main/img/ISO_optimized.png")
+        no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      font-family: Arial, sans-serif;
     }
+
+    .autor {
+    color: white !important;
+    text-align: center;
+    }
+
     .login-container {
-      max-width: 400px;
+      max-width: 420px;
       margin: 80px auto;
       padding: 30px;
-      background: white;
+      background: rgba(255, 255, 255, 0.90);
+      backdrop-filter: blur(6px);
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      color: black;
     }
+
     .btn-gradient {
       background: linear-gradient(to right, blue, red);
       color: white;
@@ -25,16 +40,20 @@
       border-radius: 8px;
       font-weight: bold;
       transition: 0.3s;
+      width: 100%;
     }
+
     .btn-gradient:hover {
       opacity: 0.9;
       transform: scale(1.05);
     }
+
     .checklist {
       text-align: left;
       max-width: 700px;
       margin: auto;
     }
+
     .checklist h5 {
       margin-top: 20px;
       font-weight: bold;
@@ -124,7 +143,7 @@ function mostrarNormas() {
         <button class="btn btn-secondary btn-lg" onclick="mostrarISO27001()">ISO 27001 - Seguridad de la Información</button>
       </div>
 
-      <div class="text-center mt-4 small text-muted">Diseñado por RPM</div>
+      <div class="text-center mt-4 small text-muted autor">Diseñado por RPM</div>
     </div>
   `;
 }
@@ -146,7 +165,8 @@ function mostrarISO27001() {
       <button class="btn btn-secondary" onclick="mostrarNormas()">Volver</button>
     </div>
 
-    <div class="text-center mt-3 small text-muted">Diseñado por RPM</div>
+    <div class="text-center mt-4 small text-muted autor">Diseñado por RPM</div>
+
   `;
 }
 
@@ -226,7 +246,8 @@ function mostrarEvidencias() {
         <button class="btn btn-outline-primary" onclick="mostrarDashboard27001()">Volver al Dashboard</button>
       </div>
 
-      <div class="text-center mt-4 small text-muted">Diseñado por RPM</div>
+      <div class="text-center mt-4 small text-muted autor">Diseñado por RPM</div>
+
     </div>
   `;
 
@@ -670,7 +691,7 @@ rowsHtml += itemRow("A.8","A.8.34","Prevención y respuesta ante fugas de inform
           <tbody id="tbody27001">
             ${rowsHtml}
           </tbody>
-        </table>
+        </table>S
       </div>
 
       <div class="text-center">
@@ -851,7 +872,8 @@ function mostrarDashboard27001() {
         </div>
       </div>
 
-      <div class="text-center mt-4 small text-muted">Diseñado por RPM</div>
+      <div class="text-center mt-4 small text-muted autor">Diseñado por RPM</div>
+
     </div>
   `;
 }
@@ -877,7 +899,8 @@ function mostrarResponsables() {
       <button class="btn btn-secondary" onclick="mostrarNormas()">Volver</button>
     </div>
 
-    <div class="text-center mt-3 small text-muted">Diseñado por RPM</div>
+    <div class="text-center mt-4 small text-muted autor">Diseñado por RPM</div>
+
   `;
 }
 
@@ -900,7 +923,8 @@ function mostrarImplementador() {
         <button class="btn btn-secondary" onclick="mostrarResponsables()">Volver</button>
       </div>
 
-      <div class="text-center mt-3 small text-muted">Diseñado por RPM</div>
+      <div class="text-center mt-4 small text-muted autor">Diseñado por RPM</div>
+
     </div>
   `;
 }
@@ -1000,7 +1024,8 @@ function mostrarDashboard() {
         </div>
       </div>
 
-      <div class="text-center mt-4 small text-muted">Diseñado por RPM</div>
+      <div class="text-center mt-4 small text-muted autor">Diseñado por RPM</div>
+
     </div>
   `;
 }
@@ -1268,7 +1293,8 @@ function mostrarEvidenciasImplementador() {
 </div>
 
 
-      <div class="text-center mt-4 small text-muted">Diseñado por RPM</div>
+      <div class="text-center mt-4 small text-muted autor">Diseñado por RPM</div>
+
     </div>
   `;
 
@@ -1416,7 +1442,8 @@ function mostrarCapacitador() {
       <button class="btn btn-secondary" onclick="mostrarResponsables()">Volver</button>
     </div>
 
-    <div class="text-center mt-3 small text-muted">Diseñado por RPM</div>
+    <div class="text-center mt-4 small text-muted autor">Diseñado por RPM</div>
+
   `;
 }
 
@@ -1454,7 +1481,8 @@ function mostrarIntroVideoCapacitador() {
           <button class="btn btn-outline-secondary" onclick="mostrarCapacitador()">Volver</button>
         </div>
 
-        <div class="text-center mt-4 small text-muted">Diseñado por RPM</div>
+        <div class="text-center mt-4 small text-muted autor">Diseñado por RPM</div>
+
       </div>
     </div>
   `;
@@ -1546,7 +1574,8 @@ function mostrarCapacitacionEvidencias() {
 
       </div>
 
-      <div class="text-center mt-4 small text-muted">Diseñado por RPM</div>
+      <div class="text-center mt-4 small text-muted autor">Diseñado por RPM</div>
+
     </div>
   `;
 
@@ -2029,7 +2058,8 @@ function mostrarAuditor() {
     <div class="text-center mt-3">
       <button class="btn btn-secondary" onclick="mostrarResponsables()">Volver</button>
     </div>
-      <div class="text-center mt-4 small text-muted">Diseñado por RPM</div>
+      <div class="text-center mt-4 small text-muted autor">Diseñado por RPM</div>
+
     </div>
   `;
     // Cuando se envía el formulario, pasamos al checklist
@@ -2141,7 +2171,8 @@ function mostrarChecklistAuditor() {
         <button class="btn btn-outline-primary" onclick="mostrarDashboard()">Volver al Dashboard</button>
       </div>
 
-      <div class="text-center mt-4 small text-muted">Diseñado por RPM</div>
+      <div class="text-center mt-4 small text-muted autor">Diseñado por RPM</div>
+
     </div>
   `;
 
